@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -8,6 +8,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import { definePreset } from '@primeng/themes';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateService, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 const MyPreset = definePreset(Lara, {
   semantic: {
@@ -28,8 +32,13 @@ const MyPreset = definePreset(Lara, {
   }
 });
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     provideClientHydration(withEventReplay()),
@@ -41,6 +50,18 @@ export const appConfig: ApplicationConfig = {
                     darkModeSelector: '.my-app-dark'
                 }
             }
-        })
+        }),
+    provideTranslateService({
+      defaultLanguage: 'en',
+    }),
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+          deps: [HttpClient]
+        }
+      })
+    )
   ]
 };
