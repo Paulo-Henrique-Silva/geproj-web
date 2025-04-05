@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { CheckboxModule } from 'primeng/checkbox';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,10 @@ import { CheckboxModule } from 'primeng/checkbox';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor() {
+  constructor(private router: Router) {
   }
 
   login(): void {
-    
+    this.router.navigate(['home']);
   }
 }
