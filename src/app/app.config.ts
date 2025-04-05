@@ -28,13 +28,43 @@ const MyPreset = definePreset(Lara, {
       800: '{green.800}',
       900: '{green.900}',
       950: '{green.950}'
+    },
+    colorScheme: {
+        light: {
+            primary: {
+                color: '{green.800}',
+                inverseColor: '#ffffff',
+                hoverColor: '{green.900}',
+                activeColor: '{green.950}'
+            },
+            highlight: {
+                background: '{green.950}',
+                focusBackground: '{green.950}',
+                color: '#ffffff',
+                focusColor: '#ffffff'
+            }
+        },
+        dark: {
+          primary: {
+            color: '{green.800}',
+            inverseColor: '#ffffff',
+            hoverColor: '{green.900}',
+            activeColor: '{green.950}'
+          },
+          highlight: {
+              background: '{green.950}',
+              focusBackground: '{green.950}',
+              color: '#ffffff',
+              focusColor: '#ffffff'
+          }
+        }
     }
   }
 });
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+//Localization
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
+  new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -58,7 +88,7 @@ export const appConfig: ApplicationConfig = {
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
-          useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+          useFactory: httpLoaderFactory,
           deps: [HttpClient]
         }
       })

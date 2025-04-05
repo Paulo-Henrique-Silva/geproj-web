@@ -1,22 +1,33 @@
 <div class="flex justify-content-center align-content-center flex-wrap h-screen">
-    <p-card header="Login" class="w-12 md:w-8 lg:w-4">
-        <div class="m-0">
+    <p-card header="Login" class="w-12 md:w-8 lg:w-4 shadow-4 border-round-md">
+        <ng-template #header>
+            <div class="flex justify-content-center align-content-center">
+                <img alt="site logo" class="w-3 mt-3" src="/images/logo.svg" />
+            </div>
+        </ng-template>
+        <ng-template #title>
+            <div class="text-center text-4xl">
+                <span>GEPROJ</span>
+            </div>
+        </ng-template>
+        <ng-template #subtitle>
+            <div class="text-center text-2xl">{{ 'LOGIN' | translate }}</div>
+        </ng-template>
+        <div>
             <div class="flex flex-column mb-3">
-                <label for="username" i18n="@@username">Username</label>
+                <label for="username" class="mb-2">{{ 'USERNAME' | translate }}</label>
                 <input pInputText id="username" aria-describedby="username-help" />
             </div>
 
-            <h1>{{ 'teste' | translate }}</h1>
-
             <div class="flex flex-column mb-3">
-                <label for="password" i18n="@@password">Password</label>
-                <p>{{"ddssd" }}</p>
+                <label for="password" class="mb-2">{{ 'PASSWORD' | translate }}</label>
                 <p-password [inputId]="'password'" [feedback]="false" [toggleMask]="true" 
                 styleClass="p-password p-component p-inputwrapper p-input-icon-right" [style]="{'width':'100%'}"
                 [inputStyle]="{'width':'100%'}"/>
             </div>
-    
-            <p-button class="flex justify-content-end" label="Login" (onClick)="login()" />
         </div>
+        <ng-template #footer>
+            <p-button class="flex justify-content-end" label="Login" (onClick)="login()" />
+        </ng-template>
     </p-card>
 </div>
